@@ -22,9 +22,18 @@ export class OffercreationComponent implements OnInit {
   onSubmit() {
     //Calculations to get Offer and emit it
     this.submitted = true;
+    
+    const date: Date = this.offercf.date
+    const model_group: string = this.offercf.model_group;
+    const local_code: string = this.offercf.local_code
+    const nrp_d: number = this.offercf.nrp * (1-this.offercf.discount)
+    const header: string = 'Price from ' + nrp_d
+    const legal: string = 'Price from ' + nrp_d + ' península y baleares'
+
+    const offer:Offer = {date, model_group, local_code, header, legal}
+    console.log(offer)
 
   }
-
 
   ngOnInit(): void {
   }
