@@ -11,6 +11,9 @@ export class OffercreationComponent implements OnInit {
 
   constructor() { }
 
+  @Output()
+  OfferSubmitted = new EventEmitter<Offer>();
+
   offercf = new Offercreationf(new Date(), '', '', 0, 0);
 
   submitted = false;
@@ -31,7 +34,8 @@ export class OffercreationComponent implements OnInit {
     const legal: string = 'Price from ' + nrp_d + ' península y baleares'
 
     const offer:Offer = {date, model_group, local_code, header, legal}
-    console.log(offer)
+
+    this.OfferSubmitted.emit(offer)
 
   }
 
