@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { Offercreationf } from '../offercreationf';
 import { Offer } from '../model/offer';
+import { Router} from '@angular/router';
 import {OffersService} from '../../app/services/offers.service';
 
 @Component({
@@ -10,7 +11,7 @@ import {OffersService} from '../../app/services/offers.service';
 })
 export class OffercreationComponent implements OnInit {
 
-  constructor(private offerservices : OffersService) { }
+  constructor(private offerservices : OffersService, private router: Router) { }
 
   offercf = new Offercreationf(new Date(), '', '', 0, 0);
 
@@ -41,7 +42,7 @@ export class OffercreationComponent implements OnInit {
   }
 
   onOfferSubmitted(offer:Offer){
-    this.offerservices.PostRequest(offer).subscribe()
+    this.offerservices.PostRequest(offer).subscribe(()=>{this.router.navigate(['/offers'])})
   }
 
 

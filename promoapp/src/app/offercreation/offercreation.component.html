@@ -31,6 +31,7 @@
           [(ngModel)]="offercf.discount" name="discount">
       </div>
       <button type="button" class="btn btn-outline-primary mr-1" (click)="newOffer()">Clear</button>
-      <button type="button" class="btn btn-outline-primary" (click)="onSubmit()">Submit</button>
+      <button type="button" class="btn btn-outline-primary mr-1" (click)="onSubmit()" [routerLink]="'/new-offer'">Submit</button>
+      <button type="button" class="btn btn-outline-primary" [routerLink]="'/offers'">Cancel</button>
     </form>
   </div>
