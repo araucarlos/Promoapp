@@ -4,11 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { OffercreationComponent } from './offercreation/offercreation.component';
 import { HttpClientModule } from '@angular/common/http';
+import { OfferdisplayComponent } from './offerdisplay/offerdisplay.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    OffercreationComponent
+    OffercreationComponent,
+    OfferdisplayComponent
   ],
   imports: [
     BrowserModule,

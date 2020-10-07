@@ -1,1 +1,2 @@
 <app-offercreation (OfferSubmitted)="onOfferSubmitted($event)"></app-offercreation>
+<app-offerdisplay *ngFor="let offer of offers" [offer]="offer"></app-offerdisplay>

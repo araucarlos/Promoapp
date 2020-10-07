@@ -30,11 +30,11 @@ const getOfferById = (request, response) => {
 const createOffer = (request, response) => {
   const { date, model_group, local_code, header, legal } = request.body
 
-  pool.query('INSERT INTO ccreativo (date, model_group, local_code, header, legal) VALUES ($1, $2, $3, $4, $5)', [date, model_group, local_code, header, legal], (error, results) => {
+  pool.query('INSERT INTO ccreativo (date, model_group, local_code, header, legal) VALUES ($1, $2, $3, $4, $5) RETURNING id', [date, model_group, local_code, header, legal], (error, result) => {
     if (error) {
       throw error
     }
-    response.status(201).send(`Offer added with ID: ${result.insertId}`)
+    response.status(201).json({message:`Offer added with ID: ${result.rows[0].id}`})
   })
 }
 
@@ -49,7 +49,7 @@ const updateOffer = (request, response) => {
       if (error) {
         throw error
       }
-      response.status(200).send(`Offer modified with ID: ${id}`)
+      response.status(200).json({message: `Offer modified with ID: ${id}`})
     }
   )
 }
@@ -61,7 +61,7 @@ const deleteOffer = (request, response) => {
     if (error) {
       throw error
     }
-    response.status(200).send(`Offer deleted with ID: ${id}`)
+    response.status(200).send({message:`Offer deleted with ID: ${id}`})
   })
 }
 
