@@ -11,17 +11,7 @@ import { Observable } from 'rxjs';
 export class AppComponent {
   title = 'promoapp';
 
-  offers:Array<Offer>
+  constructor(){}
 
-  constructor(private offerservices : OffersService){}
-
-  ngOnInit(): void {
-    this.offerservices.loadOffers().subscribe(offers=>this.offers=offers)
-  }
-
-  onOfferSubmitted(offer:Offer){
-    this.offerservices.PostRequest(offer);
-    this.offers.push(offer)
-
-  }
+  ngOnInit(): void {}
 }

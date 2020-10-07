@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { Offercreationf } from '../offercreationf';
 import { Offer } from '../model/offer';
+import {OffersService} from '../../app/services/offers.service';
 
 @Component({
   selector: 'app-offercreation',
@@ -9,10 +10,7 @@ import { Offer } from '../model/offer';
 })
 export class OffercreationComponent implements OnInit {
 
-  constructor() { }
-
-  @Output()
-  OfferSubmitted = new EventEmitter<Offer>();
+  constructor(private offerservices : OffersService) { }
 
   offercf = new Offercreationf(new Date(), '', '', 0, 0);
 
@@ -35,11 +33,15 @@ export class OffercreationComponent implements OnInit {
 
     const offer:Offer = {date, model_group, local_code, header, legal}
 
-    this.OfferSubmitted.emit(offer)
+    this.onOfferSubmitted(offer)
 
   }
 
   ngOnInit(): void {
+  }
+
+  onOfferSubmitted(offer:Offer){
+    this.offerservices.PostRequest(offer).subscribe()
   }
 
 

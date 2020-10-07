@@ -13,10 +13,7 @@ export class OffersService {
   constructor(private httpClient: HttpClient) {}
 
   public PostRequest(offer:Offer){
-    this.httpClient.post<Offer>(this.REST_API_SERVER, offer).subscribe(
-      response => console.log(response),
-      err => console.log(err)
-    );
+    return this.httpClient.post<Offer>(this.REST_API_SERVER, offer)
   }
 
   public loadOffers():Observable<Offer[]>{

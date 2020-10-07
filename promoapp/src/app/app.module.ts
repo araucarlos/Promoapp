@@ -5,17 +5,21 @@ import { AppComponent } from './app.component';
 import { OffercreationComponent } from './offercreation/offercreation.component';
 import { HttpClientModule } from '@angular/common/http';
 import { OfferdisplayComponent } from './offerdisplay/offerdisplay.component';
+import { AppRoutingModule } from './app-routing.module';
+import { OffersComponent } from './offers/offers.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     OffercreationComponent,
-    OfferdisplayComponent
+    OfferdisplayComponent,
+    OffersComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
