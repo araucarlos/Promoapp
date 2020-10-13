@@ -13,19 +13,25 @@ export class OffercreationComponent implements OnInit {
 
   constructor(private offerservices : OffersService, private router: Router) { }
 
-  offercf = new Offercreationf(new Date(), '', '', 0, 0);
+  offercf = new Offercreationf('', '', '', 0, 0);
 
   submitted = false;
 
+  monthNames : Array<string> = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+
   newOffer() {
-    this.offercf = new Offercreationf(new Date(), '', '', 0, 0);
+    this.offercf = new Offercreationf('', '', '', 0, 0);
   }
 
   onSubmit() {
     //Calculations to get Offer and emit it
     this.submitted = true;
     
-    const date: Date = this.offercf.date
+    const find: number = this.monthNames.findIndex(month => month === this.offercf.date);
+    const datein: Date = new Date();
+    datein.setMonth(find);
+
+    const date: Date = datein
     const model_group: string = this.offercf.model_group;
     const local_code: string = this.offercf.local_code
     const nrp_d: number = this.offercf.nrp * (1-this.offercf.discount)
