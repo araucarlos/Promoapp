@@ -7,6 +7,8 @@ const pool = new Pool({
   port: 5432,
 })
 
+// ccreativo table
+
 const getOffers = (request, response) => {
   pool.query('SELECT * FROM ccreativo ORDER BY id ASC', (error, results) => {
     if (error) {
@@ -65,10 +67,34 @@ const deleteOffer = (request, response) => {
   })
 }
 
+// lineup table
+
+const getModelGroups = (request, response) => {
+  pool.query('SELECT DISTINCT model_group FROM lineup', (error, results) => {
+    if (error) {
+      throw error
+    }
+    response.status(200).json(results.rows)
+  })
+}
+
+const getLvcByMG = (request, response) => {
+  const id = parseInt(request.params.id)
+
+  pool.query('SELECT * FROM lineup WHERE model_group = $1', [id], (error, results) => {
+    if (error) {
+      throw error
+    }
+    response.status(200).json(results.rows)
+  })
+}
+
 module.exports = {
   getOffers,
   getOfferById,
   createOffer,
   updateOffer,
   deleteOffer,
+  getModelGroups,
+  getLvcByMG,
 }

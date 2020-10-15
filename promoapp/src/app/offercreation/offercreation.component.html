@@ -10,9 +10,11 @@
       </div>
       <div class="form-group">
         <label for="model_group">Model Group</label>
-        <input type="text" class="form-control" id="model_group"
-          required
-          [(ngModel)]="offercf.model_group" name="model_group">
+        <select type="text" name="model_group" class="form-control" id="model_group"
+        required
+        [(ngModel)]="offercf.model_group">
+          <option *ngFor="let modelgroup of (modelgroups$ | async)" [value]="modelgroup">{{modelgroup.model_group}}</option>
+        </select>
       </div>
       <div class="form-group">
         <label for="local_code">Local Vehicle Code</label>

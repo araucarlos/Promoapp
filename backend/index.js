@@ -17,11 +17,18 @@ app.get('/', (request, response) => {
     response.json({ info: 'Node.js, Express, and Postgres API' })
 })
 
+
+//ccreativo table
 app.get('/offers', db.getOffers)
 app.get('/offers/:id', db.getOfferById)
 app.post('/offers', db.createOffer)
 app.put('/offers/:id', db.updateOffer)
 app.delete('/offers/:id', db.deleteOffer)
+
+//lineup table
+app.get('/modelgroup', db.getModelGroups)
+app.get('/lvc/:modelgroup', db.getLvcByMG)
+
 
 app.listen(port, () => {
     console.log(`App running on port ${port}.`)

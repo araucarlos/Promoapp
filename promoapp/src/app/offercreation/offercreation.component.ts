@@ -3,6 +3,8 @@ import { Offercreationf } from '../offercreationf';
 import { Offer } from '../model/offer';
 import { Router} from '@angular/router';
 import {OffersService} from '../../app/services/offers.service';
+import { Observable } from 'rxjs';
+
 
 @Component({
   selector: 'app-offercreation',
@@ -10,6 +12,8 @@ import {OffersService} from '../../app/services/offers.service';
   styleUrls: ['./offercreation.component.scss']
 })
 export class OffercreationComponent implements OnInit {
+
+  modelgroups$:Observable<any[]>;
 
   constructor(private offerservices : OffersService, private router: Router) { }
 
@@ -45,6 +49,7 @@ export class OffercreationComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.modelgroups$=this.offerservices.getModelGroups()
   }
 
   onOfferSubmitted(offer:Offer){
