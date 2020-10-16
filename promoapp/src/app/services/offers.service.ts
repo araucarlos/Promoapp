@@ -25,7 +25,7 @@ export class OffersService {
   }
 
   public getLvcByMG(modelgroup:string):Observable<any[]>{
-    return this.httpClient.get<any[]>(this.REST_API_SERVER + "lvc/:" + modelgroup)
+    return this.httpClient.get<any[]>(this.REST_API_SERVER + modelgroup)
   }
 
 }

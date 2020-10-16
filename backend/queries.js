@@ -78,10 +78,11 @@ const getModelGroups = (request, response) => {
   })
 }
 
-const getLvcByMG = (request, response) => {
-  const id = parseInt(request.params.id)
 
-  pool.query('SELECT * FROM lineup WHERE model_group = $1', [id], (error, results) => {
+const getLvcByMG = (request, response) => {
+  const mg = request.params.modelgroup
+
+  pool.query('SELECT * FROM lineup WHERE model_group = $1', [mg], (error, results) => {
     if (error) {
       throw error
     }

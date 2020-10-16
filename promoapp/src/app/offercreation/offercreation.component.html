@@ -2,7 +2,7 @@
     <form (ngSubmit)="onSubmit()" #userForm="ngForm">
       <div class="form-group">
         <label for="date">Date</label>
-        <select type="text" name="date" class="form-control" id="date"
+        <select type="text" name="date" class="form-control" #date
         required
         [(ngModel)]="offercf.date">
           <option *ngFor="let month of monthNames" [value]="month">{{month}}</option>
@@ -10,27 +10,29 @@
       </div>
       <div class="form-group">
         <label for="model_group">Model Group</label>
-        <select type="text" name="model_group" class="form-control" id="model_group"
+        <select type="text" name="model_group" class="form-control" #model_group
         required
-        [(ngModel)]="offercf.model_group">
-          <option *ngFor="let modelgroup of (modelgroups$ | async)" [value]="modelgroup">{{modelgroup.model_group}}</option>
+        [(ngModel)]="offercf.model_group" (change)="onSelect(model_group.value)">
+          <option *ngFor="let modelgroup of (modelgroups$ | async)" [value]="modelgroup.model_group">{{modelgroup.model_group}}</option>
         </select>
       </div>
       <div class="form-group">
         <label for="local_code">Local Vehicle Code</label>
-        <input type="text" class="form-control" id="local_code"
-          required
-          [(ngModel)]="offercf.local_code" name="local_code">
+        <select type="text" name="local_code" class="form-control" #local_code
+        required
+        [(ngModel)]="offercf.local_code">
+          <option *ngFor="let localcode of (localcodes$ | async)" [value]="localcode.local_code">{{localcode.local_code}}</option>
+        </select>
       </div>
       <div class="form-group">
         <label for="nrp">Net Retail Price</label>
-        <input type="text" class="form-control" id="local_code"
+        <input type="text" class="form-control" #nrp
           required
-          [(ngModel)]="offercf.nrp" name="local_code">
+          [(ngModel)]="offercf.nrp" name="nrp">
       </div>
       <div class="form-group">
         <label for="discount">Discount (%)</label>
-        <input type="text" class="form-control" id="discount"
+        <input type="text" class="form-control" #discount
           required
           [(ngModel)]="offercf.discount" name="discount">
       </div>
