@@ -15,6 +15,7 @@ export class OffercreationComponent implements OnInit {
 
   modelgroups$:Observable<any[]>;
   localcodes$:Observable<any[]>;
+  nrp$:Observable<any[]>
 
   constructor(private offerservices : OffersService, private router: Router) { }
 
@@ -57,8 +58,12 @@ export class OffercreationComponent implements OnInit {
     this.offerservices.PostRequest(offer).subscribe(()=>{this.router.navigate(['/offers'])})
   }
 
-  onSelect(modelgroup:string){
+  onMgSelect(modelgroup:string){
     this.localcodes$=this.offerservices.getLvcByMG(modelgroup)
+  }
+
+  onLvcSelect(localcode:string){
+    this.nrp$=this.offerservices.getNrpByLvc(localcode)
   }
 
 

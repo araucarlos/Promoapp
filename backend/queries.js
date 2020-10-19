@@ -90,6 +90,17 @@ const getLvcByMG = (request, response) => {
   })
 }
 
+const getNrpByLvc = (request, response) => {
+  const lvc = request.params.localcode
+
+  pool.query('SELECT price FROM lineup WHERE local_code = $1', [lvc], (error, results) => {
+    if (error) {
+      throw error
+    }
+    response.status(200).json(results.rows)
+  })
+}
+
 module.exports = {
   getOffers,
   getOfferById,
@@ -98,4 +109,5 @@ module.exports = {
   deleteOffer,
   getModelGroups,
   getLvcByMG,
+  getNrpByLvc
 }

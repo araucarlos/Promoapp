@@ -25,7 +25,11 @@ export class OffersService {
   }
 
   public getLvcByMG(modelgroup:string):Observable<any[]>{
-    return this.httpClient.get<any[]>(this.REST_API_SERVER + modelgroup)
+    return this.httpClient.get<any[]>(this.REST_API_SERVER + "localcode/" + modelgroup)
+  }
+
+  public getNrpByLvc(localcode:string):Observable<any[]>{
+    return this.httpClient.get<any[]>(this.REST_API_SERVER + "price/" + localcode)
   }
 
 }

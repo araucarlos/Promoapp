@@ -27,7 +27,8 @@ app.delete('/offers/:id', db.deleteOffer)
 
 //lineup table
 app.get('/modelgroup', db.getModelGroups)
-app.get('/:modelgroup', db.getLvcByMG)
+app.get('/localcode/:modelgroup', db.getLvcByMG)
+app.get('/price/:localcode', db.getNrpByLvc)
 
 
 app.listen(port, () => {
