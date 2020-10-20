@@ -65,11 +65,13 @@ export class OffercreationComponent implements OnInit {
   }
 
   onLvcSelect(localcode:string){
-    this.offerservices.getNrpByLvc(localcode).subscribe(
-      price => this.nrpInput.nativeElement.value = price[0].price
-    )
-
-    this.offercf.nrp = this.nrpInput.nativeElement.value
+    this.offerservices.getNrpByLvc(localcode)
+      .subscribe(
+        price => {
+          this.nrpInput.nativeElement.value = price[0].price,
+          this.offercf.nrp = this.nrpInput.nativeElement.value
+        }
+      )
   }
-  
+
 }
