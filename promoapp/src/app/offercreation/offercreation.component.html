@@ -12,7 +12,7 @@
         <label for="model_group">Model Group</label>
         <select type="text" name="model_group" class="form-control" #model_group
         required
-        [(ngModel)]="offercf.model_group" (change)="onMgSelect(model_group.value)">
+        [(ngModel)]="offercf.model_group" (ngModelChange)="onMgSelect(model_group.value)">
           <option *ngFor="let modelgroup of (modelgroups$ | async)" [value]="modelgroup.model_group">{{modelgroup.model_group}}</option>
         </select>
       </div>
@@ -20,7 +20,7 @@
         <label for="local_code">Local Vehicle Code</label>
         <select type="text" name="local_code" class="form-control" #local_code
         required
-        [(ngModel)]="offercf.local_code" (change)="onLvcSelect(local_code.value)">
+        [(ngModel)]="offercf.local_code" (ngModelChange)="onLvcSelect(local_code.value)">
           <option *ngFor="let localcode of (localcodes$ | async)" [value]="localcode.local_code">{{localcode.local_code}}</option>
         </select>
       </div>
@@ -28,7 +28,7 @@
         <label for="nrp">Net Retail Price</label>
         <input type="text" name="nrp" class="form-control" #nrp
           required
-          [(ngModel)]="offercf.nrp" placeholder="(nrp$ | async) as nrp">
+          [(ngModel)]="offercf.nrp">
       </div>
       <div class="form-group">
         <label for="discount">Discount (%)</label>

@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ChangeDetectionStrategy, ViewChild, ElementRef } from '@angular/core';
 import { Offercreationf } from '../offercreationf';
 import { Offer } from '../model/offer';
 import { Router} from '@angular/router';
@@ -15,9 +15,11 @@ export class OffercreationComponent implements OnInit {
 
   modelgroups$:Observable<any[]>;
   localcodes$:Observable<any[]>;
-  nrp$:Observable<any[]>
 
   constructor(private offerservices : OffersService, private router: Router) { }
+
+  @ViewChild('nrp')
+  nrpInput:ElementRef
 
   offercf = new Offercreationf('', '', '', 0, 0);
 
@@ -63,8 +65,11 @@ export class OffercreationComponent implements OnInit {
   }
 
   onLvcSelect(localcode:string){
-    this.nrp$=this.offerservices.getNrpByLvc(localcode)
+    this.offerservices.getNrpByLvc(localcode).subscribe(
+      price => this.nrpInput.nativeElement.value = price[0].price
+    )
+
+    this.offercf.nrp = this.nrpInput.nativeElement.value
   }
-
-
+  
 }
