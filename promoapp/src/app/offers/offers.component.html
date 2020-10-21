@@ -1,5 +1,5 @@
 <app-offerdisplay *ngFor="let offer of (offers$ | async)" [offer]="offer"></app-offerdisplay>
-<div class="container-xl p-3 my-3">
+<div class="container-xl p-3 my-3 fixed-bottom">  
     <button type="button" class="btn btn-outline-primary float-right" [routerLink]="'/new-offer'">Create offer</button>
 </div>
 
