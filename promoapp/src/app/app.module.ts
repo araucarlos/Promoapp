@@ -8,13 +8,15 @@ import { OfferdisplayComponent } from './offerdisplay/offerdisplay.component';
 import { AppRoutingModule } from './app-routing.module';
 import { OffersComponent } from './offers/offers.component';
 import { DatePipe } from '@angular/common';
+import { OffereditComponent } from './offeredit/offeredit.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     OffercreationComponent,
     OfferdisplayComponent,
-    OffersComponent
+    OffersComponent,
+    OffereditComponent
   ],
   imports: [
     BrowserModule,
