@@ -13,11 +13,13 @@ export class OfferdisplayComponent implements OnInit {
   @Input()
   offer:Offer
   
-  
-  constructor() { }
+  constructor(private offerservices : OffersService) { }
 
   ngOnInit(): void {
+  }
 
+  onClick(){
+    this.offerservices.mg.next(this.offer.model_group)
   }
 
 }

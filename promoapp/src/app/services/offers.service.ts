@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Offer } from '../model/offer';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +10,13 @@ export class OffersService {
 
   private REST_API_SERVER = "http://localhost:3000/";
 
-  constructor(private httpClient: HttpClient) {}
+  mg: BehaviorSubject<string>;
+
+  constructor(private httpClient: HttpClient) {
+
+    this.mg = new BehaviorSubject<string>("D23B")
+
+  }
 
   public PostRequest(offer:Offer){
     return this.httpClient.post<Offer>(this.REST_API_SERVER + "offers", offer)

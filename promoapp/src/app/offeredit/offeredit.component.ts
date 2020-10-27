@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Offereditf } from '../offereditf';
+import {OffersService} from '../services/offers.service';
 
 @Component({
   selector: 'app-offeredit',
@@ -8,7 +9,7 @@ import { Offereditf } from '../offereditf';
 })
 export class OffereditComponent implements OnInit {
 
-  constructor() { }
+  constructor( private offerservices : OffersService ) { }
 
   offeref = new Offereditf('', '', '', '', '');
 
@@ -16,8 +17,14 @@ export class OffereditComponent implements OnInit {
     console.log('form submitted')
   }
 
-
   ngOnInit(): void {
+    this.offerservices.mg.subscribe(mg => {
+      console.log("model group:" + mg)
+    })
+  }
+
+  ngOnDestroy(): void {
+
   }
 
 }
