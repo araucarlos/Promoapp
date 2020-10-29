@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { Offereditf } from '../offereditf';
 import {OffersService} from '../services/offers.service';
 
@@ -9,7 +10,11 @@ import {OffersService} from '../services/offers.service';
 })
 export class OffereditComponent implements OnInit {
 
-  constructor( private offerservices : OffersService ) { }
+  mgsubscription:any;
+
+  constructor( private offerservices : OffersService ) {
+
+  }
 
   offeref = new Offereditf('', '', '', '', '');
 
@@ -18,13 +23,15 @@ export class OffereditComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.offerservices.mg.subscribe(mg => {
-      console.log("model group:" + mg)
+    this.mgsubscription = this.offerservices.mg.subscribe(mg => {
+      console.log(mg);
     })
   }
+  
 
   ngOnDestroy(): void {
-
+    console.log("hello");
+    this.mgsubscription.unsubscribe()
   }
 
 }

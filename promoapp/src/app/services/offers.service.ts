@@ -9,13 +9,14 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class OffersService {
 
   private REST_API_SERVER = "http://localhost:3000/";
-
+  
   mg: BehaviorSubject<string>;
 
   constructor(private httpClient: HttpClient) {
 
+    console.log("constructor")
     this.mg = new BehaviorSubject<string>("D23B")
-
+    
   }
 
   public PostRequest(offer:Offer){
