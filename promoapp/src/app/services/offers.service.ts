@@ -10,13 +10,10 @@ export class OffersService {
 
   private REST_API_SERVER = "http://localhost:3000/";
   
-  mg: BehaviorSubject<string>;
+  id: BehaviorSubject<number>;
 
   constructor(private httpClient: HttpClient) {
-
-    console.log("constructor")
-    this.mg = new BehaviorSubject<string>("D23B")
-    
+    this.id = new BehaviorSubject<number>(0)
   }
 
   public PostRequest(offer:Offer){
@@ -25,6 +22,10 @@ export class OffersService {
 
   public loadOffers():Observable<Offer[]>{
     return this.httpClient.get<Offer[]>(this.REST_API_SERVER + "offers")
+  }
+
+  public loadOfferId(id:number):Observable<Offer>{
+    return this.httpClient.get<Offer>(this.REST_API_SERVER + "offers/" + id)
   }
 
   public getModelGroups():Observable<any[]>{

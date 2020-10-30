@@ -18,9 +18,6 @@ export class OffercreationComponent implements OnInit {
 
   constructor(private offerservices : OffersService, private router: Router) { }
 
-  @ViewChild('nrp')
-  nrpInput:ElementRef
-
   offercf = new Offercreationf('', '', '', 0, 0);
 
   submitted = false;
@@ -68,8 +65,7 @@ export class OffercreationComponent implements OnInit {
     this.offerservices.getNrpByLvc(localcode)
       .subscribe(
         price => {
-          this.nrpInput.nativeElement.value = price[0].price,
-          this.offercf.nrp = this.nrpInput.nativeElement.value
+          this.offercf.nrp = price[0].price
         }
       )
   }

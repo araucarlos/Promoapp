@@ -19,7 +19,7 @@ export class OfferdisplayComponent implements OnInit {
   }
 
   onClick(){
-    this.offerservices.mg.next(this.offer.model_group)
+    this.offerservices.id.next(this.offer.id)
   }
 
 }

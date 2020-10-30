@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription, Observable } from 'rxjs';
+import { Offer } from '../model/offer';
 import { Offereditf } from '../offereditf';
 import {OffersService} from '../services/offers.service';
 
@@ -10,7 +11,8 @@ import {OffersService} from '../services/offers.service';
 })
 export class OffereditComponent implements OnInit {
 
-  mgsubscription:any;
+  idsubscription:any;
+  offer:Offer
 
   constructor( private offerservices : OffersService ) {
 
@@ -23,15 +25,20 @@ export class OffereditComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.mgsubscription = this.offerservices.mg.subscribe(mg => {
-      console.log(mg);
-    })
+    this.idsubscription = this.offerservices.id.subscribe(id => {
+      this.offerservices.loadOfferId(id).subscribe(offer => {
+        //transform date
+        this.offeref.model_group = offer[0].model_group;
+        this.offeref.local_code = offer[0].local_code;
+        this.offeref.header = offer[0].header;
+        this.offeref.legal = offer[0].legal;
+      });
+    });
   }
   
 
   ngOnDestroy(): void {
-    console.log("hello");
-    this.mgsubscription.unsubscribe()
+    this.idsubscription.unsubscribe()
   }
 
 }
