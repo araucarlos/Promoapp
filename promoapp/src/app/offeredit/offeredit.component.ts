@@ -13,6 +13,7 @@ export class OffereditComponent implements OnInit {
 
   idsubscription:any;
   offer:Offer
+  monthNames : Array<string> = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
   constructor( private offerservices : OffersService ) {
 
@@ -27,7 +28,7 @@ export class OffereditComponent implements OnInit {
   ngOnInit(): void {
     this.idsubscription = this.offerservices.id.subscribe(id => {
       this.offerservices.loadOfferId(id).subscribe(offer => {
-        //transform date
+        this.offeref.date = this.monthNames[parseInt(offer[0].date.substring(5,7))-1];
         this.offeref.model_group = offer[0].model_group;
         this.offeref.local_code = offer[0].local_code;
         this.offeref.header = offer[0].header;
