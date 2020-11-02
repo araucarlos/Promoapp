@@ -24,6 +24,10 @@ export class OffersService {
     return this.httpClient.put<Offer>(this.REST_API_SERVER + "offers/" + offer.id, offer)
   }
 
+  public deleteOffer(id:number){
+    return this.httpClient.delete<Offer>(this.REST_API_SERVER + "offers/" + id)
+  }
+
   public loadOffers():Observable<Offer[]>{
     return this.httpClient.get<Offer[]>(this.REST_API_SERVER + "offers")
   }

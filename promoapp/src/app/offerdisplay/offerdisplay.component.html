@@ -1,4 +1,4 @@
-<div class="container-xl p-3 my-3 border rounded shadow" id="offercontainer">
+<div *ngIf="display" class="container-xl p-3 my-3 border rounded shadow" id="offercontainer">
     <table class="table">
         <thead>
         <tr>
@@ -19,6 +19,6 @@
         </tr>
         </tbody>
     </table>
-    <button type="button" class="btn btn-outline-primary mr-1" (click)="onClick()" [routerLink]="'/edit-offer'">Edit</button>
-    <button type="button" class="btn btn-outline-primary">Delete</button>
+    <button type="button" class="btn btn-outline-primary mr-1" (click)="edit()" [routerLink]="'/edit-offer'">Edit</button>
+    <button type="button" class="btn btn-outline-primary" (click)="delete()" >Delete</button>
 </div>
