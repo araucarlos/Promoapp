@@ -30,7 +30,7 @@
               required
               [(ngModel)]="offeref.legal">
         </div>
-        <button type="button" class="btn btn-outline-primary mr-1">Save Changes</button>
+        <button type="button" class="btn btn-outline-primary mr-1" (click)="onSubmit()">Save Changes</button>
         <button type="button" class="btn btn-outline-primary mr-1" [routerLink]="'/offers'">Cancel</button>
     </form>
 </div>

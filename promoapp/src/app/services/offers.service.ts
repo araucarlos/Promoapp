@@ -16,14 +16,18 @@ export class OffersService {
     this.id = new BehaviorSubject<number>(0)
   }
 
-  public PostRequest(offer:Offer){
+  public postOffer(offer:Offer){
     return this.httpClient.post<Offer>(this.REST_API_SERVER + "offers", offer)
+  }
+
+  public updateOffer(offer:Offer){
+    return this.httpClient.put<Offer>(this.REST_API_SERVER + "offers/" + offer.id, offer)
   }
 
   public loadOffers():Observable<Offer[]>{
     return this.httpClient.get<Offer[]>(this.REST_API_SERVER + "offers")
   }
-
+  
   public loadOfferId(id:number):Observable<Offer>{
     return this.httpClient.get<Offer>(this.REST_API_SERVER + "offers/" + id)
   }

@@ -45,7 +45,7 @@ const updateOffer = (request, response) => {
   const { date, model_group, local_code, header, legal } = request.body
 
   pool.query(
-    'UPDATE ccreativo SET date = $1, model_group = $2, local_code = $3, header = $4, legal = =$5 WHERE id = $6',
+    'UPDATE ccreativo SET date = $1, model_group = $2, local_code = $3, header = $4, legal = $5 WHERE id = $6',
     [date, model_group, local_code, header, legal, id],
     (error, results) => {
       if (error) {

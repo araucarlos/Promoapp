@@ -20,8 +20,6 @@ export class OffercreationComponent implements OnInit {
 
   offercf = new Offercreationf('', '', '', 0, 0);
 
-  submitted = false;
-
   monthNames : Array<string> = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
   newOffer() {
@@ -29,23 +27,22 @@ export class OffercreationComponent implements OnInit {
   }
 
   onSubmit() {
-    //Calculations to get Offer and emit it
-    this.submitted = true;
-    
+
+    //string to date
     const find: number = this.monthNames.findIndex(month => month === this.offercf.date);
     const datein: Date = new Date();
     datein.setMonth(find);
+    const date: Date = datein;
 
-    const date: Date = datein
     const model_group: string = this.offercf.model_group;
     const local_code: string = this.offercf.local_code
     const nrp_d: number = this.offercf.nrp * (1-this.offercf.discount)
     const header: string = 'Price from ' + nrp_d
     const legal: string = 'Price from ' + nrp_d + ' península y baleares'
 
-    const offer:Offer = {date, model_group, local_code, header, legal}
+    const offer:Offer = {date, model_group, local_code, header, legal};
 
-    this.onOfferSubmitted(offer)
+    this.offerservices.postOffer(offer).subscribe(()=>{this.router.navigate(['/offers'])})
 
   }
 
@@ -53,9 +50,6 @@ export class OffercreationComponent implements OnInit {
     this.modelgroups$=this.offerservices.getModelGroups()
   }
 
-  onOfferSubmitted(offer:Offer){
-    this.offerservices.PostRequest(offer).subscribe(()=>{this.router.navigate(['/offers'])})
-  }
 
   onMgSelect(modelgroup:string){
     this.localcodes$=this.offerservices.getLvcByMG(modelgroup)
