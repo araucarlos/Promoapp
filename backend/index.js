@@ -15,19 +15,19 @@ app.get('/', (request, response) => {
 })
 
 app.post('/login', (req, res) => {
-  if(req.body.user === "carlos" && req.body.password === "helloworld") {
-  const payload = {
-    check:  true
-  };
-  const token = jwt.sign(payload, app.get('key'), {
-    expiresIn: 1440
-  });
-  res.json({
-    mensaje: 'Authentication ok',
-    token: token
-  });
+  if(req.body.username === "carlos" && req.body.password === "helloworld") {
+    const payload = {
+      check:  true
+    };
+    const token = jwt.sign(payload, app.get('key'), {
+      expiresIn: 1440
+    });
+    res.json({
+      mensaje: "Authentication ok",
+      token: token
+    });
   } else {
-      res.json({ mensaje: "Incorrect User or Password"})
+    res.json({ mensaje: "Incorrect User or Password"})
   }
 })
 

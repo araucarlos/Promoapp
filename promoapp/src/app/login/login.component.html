@@ -1,5 +1,5 @@
 <div class="container-xl p-3 my-3 border rounded shadow">
-    <form #userForm="ngForm">
+    <form (ngSubmit)="Login()" #userForm="ngForm">
         <div class="form-group">
             <label for="username">User Name</label>
             <input type="text" name="username" class="form-control" #username
@@ -8,11 +8,11 @@
         </div>
         <div class="form-group">
             <label for="password">Password</label>
-            <input type="text" name="password" class="form-control" #password
+            <input type="password" name="password" class="form-control" #password
               required
               [(ngModel)]="loginf.password">
         </div>
-        <button type="button" class="btn btn-outline-primary mr-1">Login</button>
+        <button type="button" class="btn btn-outline-primary mr-1" (click)="Login()">Login</button>
         <button type="button" class="btn btn-outline-primary mr-1">Sign up</button>
     </form>
 </div>
