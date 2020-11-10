@@ -26,6 +26,7 @@ export class LoginComponent implements OnInit {
     this.authservice.login(credentials).subscribe(response => {
       const token = JSON.parse(JSON.stringify(response)).token
       this.cookieService.set('authToken', token);
+      this.router.navigate(['/offers'])
     })
   }
 

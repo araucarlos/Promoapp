@@ -10,6 +10,9 @@ import { OffersComponent } from './offers/offers.component';
 import { DatePipe } from '@angular/common';
 import { LoginComponent } from './login/login.component';
 import {OffereditComponent} from '../app/offeredit/offeredit.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from './services/token.interceptor';
+
 
 @NgModule({
   declarations: [
@@ -26,7 +29,14 @@ import {OffereditComponent} from '../app/offeredit/offeredit.component';
     HttpClientModule,
     AppRoutingModule,
   ],
-  providers: [DatePipe],
+  providers: [
+    DatePipe,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

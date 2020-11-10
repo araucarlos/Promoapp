@@ -33,8 +33,8 @@ app.post('/login', (req, res) => {
 
 const rutasProtegidas = express.Router(); 
 rutasProtegidas.use((req, res, next) => {
-    const token = req.headers['access-token'];
- 
+    const token = req.headers['authorization'];
+    console.log(req.headers)
     if (token) {
       jwt.verify(token, app.get('key'), (err, decoded) => {      
         if (err) {
@@ -52,16 +52,16 @@ rutasProtegidas.use((req, res, next) => {
  });
 
 //ccreativo table
-app.get('/offers', db.getOffers)
-app.get('/offers/:id', db.getOfferById)
-app.post('/offers', db.createOffer)
-app.put('/offers/:id', db.updateOffer)
-app.delete('/offers/:id', db.deleteOffer)
+app.get('/offers', rutasProtegidas, db.getOffers)
+app.get('/offers/:id', rutasProtegidas, db.getOfferById)
+app.post('/offers', rutasProtegidas, db.createOffer)
+app.put('/offers/:id', rutasProtegidas, db.updateOffer)
+app.delete('/offers/:id', rutasProtegidas, db.deleteOffer)
 
 //lineup table
-app.get('/modelgroup', db.getModelGroups)
-app.get('/localcode/:modelgroup', db.getLvcByMG)
-app.get('/price/:localcode', db.getNrpByLvc)
+app.get('/modelgroup', rutasProtegidas, db.getModelGroups)
+app.get('/localcode/:modelgroup', rutasProtegidas, db.getLvcByMG)
+app.get('/price/:localcode', rutasProtegidas, db.getNrpByLvc)
 
 
 app.listen(port, () => {
