@@ -6,6 +6,32 @@ const pool = new Pool({
   password: 'password',
   port: 5432,
 })
+const jwt = require('jsonwebtoken');
+
+// login table
+
+const login = (request, response) => {
+  const { email, password } = request.body
+  pool.query('SELECT id FROM users WHERE email = $1 AND password = crypt($2, password)', [email, password], (error, results) =>{
+    if (error) {
+      throw error
+    }
+    if (results.rows[0] == null){
+      response.json({ message: "Incorrect User or Password"})
+    }else{
+      const payload = {
+        check:  true
+      };
+      const token = jwt.sign(payload, 'secretkey', {
+        expiresIn: 1440
+      });
+      response.json({
+        message: "Authentication ok",
+        token: token
+      });  
+    }
+  })
+}
 
 // ccreativo table
 
@@ -102,6 +128,7 @@ const getNrpByLvc = (request, response) => {
 }
 
 module.exports = {
+  login,
   getOffers,
   getOfferById,
   createOffer,
