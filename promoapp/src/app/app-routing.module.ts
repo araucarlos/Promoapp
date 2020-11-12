@@ -7,7 +7,7 @@ import {OffereditComponent} from '../app/offeredit/offeredit.component'
 import {LoginComponent} from '../app/login/login.component'
 
 const routes: Routes = [
-  { path: '', redirectTo: '/offers', pathMatch: 'full' },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'new-offer', component: OffercreationComponent },
   { path: 'offers', component: OffersComponent },
   { path: 'edit-offer', component: OffereditComponent },
