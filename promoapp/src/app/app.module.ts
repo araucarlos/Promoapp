@@ -12,6 +12,7 @@ import { LoginComponent } from './login/login.component';
 import {OffereditComponent} from '../app/offeredit/offeredit.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './services/token.interceptor';
+import { NavbarComponent } from './navbar/navbar.component';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { TokenInterceptor } from './services/token.interceptor';
     OffersComponent,
     OffereditComponent,
     LoginComponent,
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,
