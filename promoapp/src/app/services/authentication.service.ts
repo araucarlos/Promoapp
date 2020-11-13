@@ -10,7 +10,9 @@ export class AuthenticationService {
 
   private REST_API_SERVER = "http://localhost:3000/";
 
-  constructor( private httpClient: HttpClient ) { }
+  isLoggedIn$ = new BehaviorSubject<boolean>(false);
+
+  constructor( private httpClient: HttpClient ) {}
 
   public login(credentials:any){
     return this.httpClient.post(this.REST_API_SERVER + "login", credentials)

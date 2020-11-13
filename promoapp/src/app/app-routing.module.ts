@@ -5,12 +5,13 @@ import {OffercreationComponent} from '../app/offercreation/offercreation.compone
 import {OffersComponent} from '../app/offers/offers.component'
 import {OffereditComponent} from '../app/offeredit/offeredit.component'
 import {LoginComponent} from '../app/login/login.component'
+import {AuthenticationGuard} from '../app/services/authentication.guard'
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: 'new-offer', component: OffercreationComponent },
-  { path: 'offers', component: OffersComponent },
-  { path: 'edit-offer', component: OffereditComponent },
+  { path: 'new-offer', component: OffercreationComponent, canActivate: [AuthenticationGuard] },
+  { path: 'offers', component: OffersComponent, canActivate: [AuthenticationGuard] },
+  { path: 'edit-offer', component: OffereditComponent, canActivate: [AuthenticationGuard] },
   { path: 'login', component: LoginComponent },
 ];
 

@@ -30,6 +30,7 @@ export class LoginComponent implements OnInit {
         this.wrongcredentials = true
       } else{
         const token = JSON.parse(JSON.stringify(response)).token;
+        this.authservice.isLoggedIn$.next(true);
         this.cookieService.set('authToken', token);
         this.router.navigate(['/offers'])
       } 
