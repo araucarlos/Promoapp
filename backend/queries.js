@@ -2,7 +2,7 @@ const Pool = require('pg').Pool
 const pool = new Pool({
   user: 'carlos',
   host: 'localhost',
-  database: 'ccreativo',
+  database: 'promoapp',
   password: 'password',
   port: 5432,
 })
@@ -96,7 +96,7 @@ const deleteOffer = (request, response) => {
 // lineup table
 
 const getModelGroups = (request, response) => {
-  pool.query('SELECT DISTINCT model_group FROM lineup', (error, results) => {
+  pool.query('SELECT DISTINCT model_group FROM lineup_pyb', (error, results) => {
     if (error) {
       throw error
     }
@@ -108,7 +108,7 @@ const getModelGroups = (request, response) => {
 const getLvcByMG = (request, response) => {
   const mg = request.params.modelgroup
 
-  pool.query('SELECT * FROM lineup WHERE model_group = $1', [mg], (error, results) => {
+  pool.query('SELECT * FROM lineup_pyb WHERE model_group = $1', [mg], (error, results) => {
     if (error) {
       throw error
     }
@@ -119,7 +119,7 @@ const getLvcByMG = (request, response) => {
 const getNrpByLvc = (request, response) => {
   const lvc = request.params.localcode
 
-  pool.query('SELECT price FROM lineup WHERE local_code = $1', [lvc], (error, results) => {
+  pool.query('SELECT pff FROM lineup_pyb WHERE local_code = $1', [lvc], (error, results) => {
     if (error) {
       throw error
     }

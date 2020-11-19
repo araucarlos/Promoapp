@@ -59,7 +59,8 @@ export class OffercreationComponent implements OnInit {
     this.offerservices.getNrpByLvc(localcode)
       .subscribe(
         price => {
-          this.offercf.nrp = price[0].price
+          this.offercf.nrp = price[0].pff
+
         }
       )
   }
