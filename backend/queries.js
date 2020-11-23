@@ -36,7 +36,7 @@ const login = (request, response) => {
 // ccreativo table
 
 const getOffers = (request, response) => {
-  pool.query('SELECT * FROM ccreativo ORDER BY id ASC', (error, results) => {
+  pool.query('SELECT * FROM ccreativo2 ORDER BY id ASC', (error, results) => {
     if (error) {
       throw error
     }
@@ -47,7 +47,7 @@ const getOffers = (request, response) => {
 const getOfferById = (request, response) => {
   const id = parseInt(request.params.id)
 
-  pool.query('SELECT * FROM ccreativo WHERE id = $1', [id], (error, results) => {
+  pool.query('SELECT * FROM ccreativo2 WHERE id = $1', [id], (error, results) => {
     if (error) {
       throw error
     }
@@ -56,9 +56,9 @@ const getOfferById = (request, response) => {
 }
 
 const createOffer = (request, response) => {
-  const { date, model_group, local_code, header, legal } = request.body
+  const { header, price, type1, type2, date, legal, emissions } = request.body
 
-  pool.query('INSERT INTO ccreativo (date, model_group, local_code, header, legal) VALUES ($1, $2, $3, $4, $5) RETURNING id', [date, model_group, local_code, header, legal], (error, result) => {
+  pool.query('INSERT INTO ccreativo2 (header, price, type1, type2, date, legal, emissions) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id', [header, price, type1, type2, date, legal, emissions], (error, result) => {
     if (error) {
       throw error
     }
@@ -68,11 +68,11 @@ const createOffer = (request, response) => {
 
 const updateOffer = (request, response) => {
   const id = parseInt(request.params.id)
-  const { date, model_group, local_code, header, legal } = request.body
+  const { header, price, type1, type2, date, legal, emissions } = request.body
 
   pool.query(
-    'UPDATE ccreativo SET date = $1, model_group = $2, local_code = $3, header = $4, legal = $5 WHERE id = $6',
-    [date, model_group, local_code, header, legal, id],
+    'UPDATE ccreativo2 SET header = $1, price = $2, type1 = $3, type2 = $4, date = $5, legal = $6, emissions = $7 WHERE id = $8',
+    [ header, price, type1, type2, date, legal, emissions, id ],
     (error, results) => {
       if (error) {
         throw error
@@ -85,13 +85,14 @@ const updateOffer = (request, response) => {
 const deleteOffer = (request, response) => {
   const id = parseInt(request.params.id)
 
-  pool.query('DELETE FROM ccreativo WHERE id = $1', [id], (error, results) => {
+  pool.query('DELETE FROM ccreativo2 WHERE id = $1', [id], (error, results) => {
     if (error) {
       throw error
     }
     response.status(200).send({message:`Offer deleted with ID: ${id}`})
   })
 }
+
 
 // lineup table
 

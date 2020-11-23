@@ -1,5 +1,30 @@
 <div class="container-xl p-3 my-3 border rounded shadow">
     <form (ngSubmit)="onSubmit()" #userForm="ngForm">
+        
+        <div class="form-group">
+          <label for="header">Header</label>
+          <input type="text" name="header" class="form-control" #header
+            required
+            [(ngModel)]="offeref.header" readonly>
+        </div>
+        <div class="form-group">
+          <label for="price">Price</label>
+          <input type="text" name="price" class="form-control" #price
+            required
+            [(ngModel)]="offeref.price">
+        </div>
+        <div class="form-group">
+          <label for="type1">Desde/Por</label>
+          <input type="text" name="type1" class="form-control" #type1
+            required
+            [(ngModel)]="offeref.type1" readonly>
+        </div>
+        <div class="form-group">
+          <label for="type2">PVP/PFF</label>
+          <input type="text" name="type2" class="form-control" #type2
+            required
+            [(ngModel)]="offeref.type2" readonly>
+        </div> 
         <div class="form-group">
             <label for="date">Date</label>
             <input type="text" name="date" class="form-control" #date
@@ -7,29 +32,17 @@
               [(ngModel)]="offeref.date" readonly>
         </div>
         <div class="form-group">
-            <label for="model_group">Model Group</label>
-            <input type="text" name="model_group" class="form-control" #model_group
-              required
-              [(ngModel)]="offeref.model_group" readonly>
-        </div>
-        <div class="form-group">
-            <label for="local_code">Local Vehicle Code</label>
-            <input type="text" name="local_code" class="form-control" #local_code
-              required
-              [(ngModel)]="offeref.local_code" readonly>
-        </div>
-        <div class="form-group">
-            <label for="local_code">Header</label>
-            <input type="text" name="header" class="form-control" #header
-              required
-              [(ngModel)]="offeref.header">
-        </div>
-        <div class="form-group">
-            <label for="local_code">Legal</label>
+            <label for="legal">Legal</label>
             <input type="text" name="legal" class="form-control" #legal
               required
               [(ngModel)]="offeref.legal">
         </div>
+        <div class="form-group">
+          <label for="emissions">Emissions</label>
+          <input type="text" name="emissions" class="form-control" #emissions
+            required
+            [(ngModel)]="offeref.emissions">
+      </div>
         <button type="button" class="btn btn-outline-primary mr-1" (click)="onSubmit()">Save Changes</button>
         <button type="button" class="btn btn-outline-primary mr-1" [routerLink]="'/offers'">Cancel</button>
     </form>

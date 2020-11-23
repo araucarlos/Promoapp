@@ -1,8 +1,10 @@
 export interface Offer{
     id?: number,
+    header: string,
+    price: number,
+    type1: string,
+    type2: string,
     date: Date,
-    model_group: string,
-    local_code: string,
-    header:string,
-    legal:string,
+    legal: string,
+    emissions: string,
 }

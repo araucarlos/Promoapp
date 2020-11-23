@@ -2,20 +2,19 @@
     <table class="table">
         <thead>
         <tr>
-            <th scope="date">Date</th>
-            <th scope="model_group">Model Group</th>
-            <th scope="local_code">Local Vehicle Code</th>
-            <th scope="header">Header</th>
-            <th scope="legal">Legal</th>
+            <th scope="Header">Header</th>
+            <th scope="Price">Offer</th>
+            <th scope="Type1">Desde/Por</th>
+            <th scope="Date">Date</th>
+
         </tr>
         </thead>
         <tbody>
         <tr>
-            <td>{{offer.date | date: 'MMMM'}}</td>
-            <td>{{offer.model_group}}</td>
-            <td>{{offer.local_code}}</td>
             <td>{{offer.header}}</td>
-            <td>{{offer.legal}}</td>
+            <td>{{offer.price | currency: 'EUR'}}</td>
+            <td>{{offer.type1}}</td>
+            <td>{{offer.date | date: 'MMMM'}}</td>
         </tr>
         </tbody>
     </table>

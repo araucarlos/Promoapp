@@ -20,10 +20,14 @@ export class OffereditComponent implements OnInit {
 
   }
 
-  offeref = new Offereditf(0,'', '', '', '', '');
+  offeref = new Offereditf(0,'', 0, '', '', '','','');
 
   onSubmit() {
     const id:number = this.offeref.id;
+    const header: string = this.offeref.header;
+    const price: number = this.offeref.price;
+    const type1: string = this.offeref.type1;
+    const type2: string = this.offeref.type2;
 
     //string to date
     const find: number = this.monthNames.findIndex(month => month === this.offeref.date);
@@ -31,12 +35,10 @@ export class OffereditComponent implements OnInit {
     datein.setMonth(find);
     const date: Date = datein;
 
-    const model_group: string = this.offeref.model_group;
-    const local_code: string = this.offeref.local_code;
-    const header: string = this.offeref.header;
     const legal: string = this.offeref.legal;
+    const emissions: string = this.offeref.emissions;
 
-    const offer:Offer = {id, date, model_group, local_code, header, legal};
+    const offer:Offer = {id, header, price, type1, type2, date, legal, emissions};
 
     this.offerservices.updateOffer(offer).subscribe(()=>{this.router.navigate(['/offers'])})
 
@@ -46,11 +48,13 @@ export class OffereditComponent implements OnInit {
     this.idsubscription = this.offerservices.id.subscribe(id => {
       this.offerservices.loadOfferId(id).subscribe(offer => {
         this.offeref.id = offer[0].id;
-        this.offeref.date = this.monthNames[parseInt(offer[0].date.substring(5,7))-1];
-        this.offeref.model_group = offer[0].model_group;
-        this.offeref.local_code = offer[0].local_code;
         this.offeref.header = offer[0].header;
+        this.offeref.price = offer[0].price;
+        this.offeref.type1 = offer[0].type1;
+        this.offeref.type2 = offer[0].type2;
+        this.offeref.date = this.monthNames[parseInt(offer[0].date.substring(5,7))-1];
         this.offeref.legal = offer[0].legal;
+        this.offeref.emissions = offer[0].emissions;
       });
     });
   }

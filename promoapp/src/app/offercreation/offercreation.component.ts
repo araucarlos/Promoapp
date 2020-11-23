@@ -28,19 +28,22 @@ export class OffercreationComponent implements OnInit {
 
   onSubmit() {
 
+    
+    const header: string = 'hello';
+    const price: number = this.offercf.nrp * (1-this.offercf.discount);
+    const type1: string = 'Desde';
+    const type2: string = 'PVP';
+
     //string to date
     const find: number = this.monthNames.findIndex(month => month === this.offercf.date);
     const datein: Date = new Date();
     datein.setMonth(find);
     const date: Date = datein;
+  
+    const legal: string = 'Price from ' + price + ' península y baleares';
+    const emissions: string = 'CO2';
 
-    const model_group: string = this.offercf.model_group;
-    const local_code: string = this.offercf.local_code
-    const nrp_d: number = this.offercf.nrp * (1-this.offercf.discount)
-    const header: string = 'Price from ' + nrp_d
-    const legal: string = 'Price from ' + nrp_d + ' península y baleares'
-
-    const offer:Offer = {date, model_group, local_code, header, legal};
+    const offer:Offer = {header, price, type1, type2, date, legal, emissions};
 
     this.offerservices.postOffer(offer).subscribe(()=>{this.router.navigate(['/offers'])})
 
