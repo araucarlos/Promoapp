@@ -3,7 +3,8 @@ import { Offercreationf } from '../offercreationf';
 import { Offer } from '../model/offer';
 import { Router} from '@angular/router';
 import {OffersService} from '../../app/services/offers.service';
-import { Observable } from 'rxjs';
+import { forkJoin, Observable, Subscription } from 'rxjs';
+import { map, tap } from "rxjs/operators";
 
 
 @Component({
@@ -13,8 +14,17 @@ import { Observable } from 'rxjs';
 })
 export class OffercreationComponent implements OnInit {
 
+  lvcsubscription$: Subscription
   modelgroups$:Observable<any[]>;
   localcodes$:Observable<any[]>;
+
+  header:string = '';
+  modelgroup:string = '';
+  body:string = '';
+  grade:string = '';
+  ddiscount:number = 0;
+  fdiscount:number = 0;
+  oprice:number = 0;
 
   constructor(private offerservices : OffersService, private router: Router) { }
 
@@ -27,10 +37,7 @@ export class OffercreationComponent implements OnInit {
   }
 
   onSubmit() {
-
-    
-    const header: string = 'hello';
-    const price: number = this.offercf.nrp * (1-this.offercf.discount);
+    const header: string = this.header;
     const type1: string = 'Desde';
     const type2: string = 'PVP';
 
@@ -39,7 +46,23 @@ export class OffercreationComponent implements OnInit {
     const datein: Date = new Date();
     datein.setMonth(find);
     const date: Date = datein;
-  
+
+    if( this.modelgroup == 'D23B') {
+
+      let ddiscount$ = this.offerservices.getddiscount(this.modelgroup, this.body, this.grade);
+      let fdiscount$ = this.offerservices.getfdiscount(this.modelgroup);
+
+      forkJoin([ddiscount$, fdiscount$]).subscribe(results => {
+        this.ddiscount = parseFloat(results[0][0].discount);
+        this.fdiscount = parseInt(results[1][0].discount);
+        this.oprice = this.offercf.nrp * (1-this.ddiscount) - this.fdiscount;
+        console.log(this.oprice)
+      })
+
+    }
+
+
+    const price: number = this.offercf.nrp * (1-this.offercf.discount);
     const legal: string = 'Price from ' + price + ' península y baleares';
     const emissions: string = 'CO2';
 
@@ -59,13 +82,22 @@ export class OffercreationComponent implements OnInit {
   }
 
   onLvcSelect(localcode:string){
-    this.offerservices.getNrpByLvc(localcode)
-      .subscribe(
-        price => {
-          this.offercf.nrp = price[0].pff
-
-        }
+    this.lvcsubscription$ = this.offerservices.getByLvc(localcode)
+      .pipe (
+        map(data => data[0]),
       )
+      .subscribe(data => {
+        this.offercf.nrp = data.pff
+        this.header = data.description
+        this.modelgroup = data.model_group
+        this.body = data.body
+        this.grade = data.grade
+      })
   }
+
+  ngOnDestroy(): void {
+    this.lvcsubscription$.unsubscribe()
+  }
+
 
 }

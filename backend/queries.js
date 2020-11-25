@@ -117,10 +117,36 @@ const getLvcByMG = (request, response) => {
   })
 }
 
-const getNrpByLvc = (request, response) => {
+const getByLvc = (request, response) => {
   const lvc = request.params.localcode
 
-  pool.query('SELECT pff FROM lineup_pyb WHERE local_code = $1', [lvc], (error, results) => {
+  pool.query('SELECT * FROM lineup_pyb WHERE local_code = $1', [lvc], (error, results) => {
+    if (error) {
+      throw error
+    }
+    response.status(200).json(results.rows)
+  })
+}
+
+const getddiscount = (request, response) => {
+  const mg = request.params.modelgroup
+  const bt = request.params.body
+  const grade = request.params.grade
+  const campaign = 'Oferta Cliente'
+
+  pool.query('SELECT discount FROM campaign WHERE model_group = $1 AND body = $2 AND grade = $3 AND campaign = $4', [mg, bt, grade, campaign], (error, results) => {
+    if (error) {
+      throw error
+    }
+    response.status(200).json(results.rows)
+  })
+}
+
+const getfdiscount = (request, response) => {
+  const mg = request.params.modelgroup
+  const campaign = 'Financiacion'
+
+  pool.query('SELECT discount FROM campaign WHERE model_group = $1 AND campaign = $2', [mg, campaign], (error, results) => {
     if (error) {
       throw error
     }
@@ -137,5 +163,7 @@ module.exports = {
   deleteOffer,
   getModelGroups,
   getLvcByMG,
-  getNrpByLvc
+  getByLvc,
+  getddiscount,
+  getfdiscount
 }

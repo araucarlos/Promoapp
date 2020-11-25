@@ -47,7 +47,11 @@ app.delete('/offers/:id', rutasProtegidas, db.deleteOffer)
 //lineup table
 app.get('/modelgroup', rutasProtegidas, db.getModelGroups)
 app.get('/localcode/:modelgroup', rutasProtegidas, db.getLvcByMG)
-app.get('/price/:localcode', rutasProtegidas, db.getNrpByLvc)
+app.get('/price/:localcode', rutasProtegidas, db.getByLvc)
+
+//campaing table
+app.get('/campaignd/:modelgroup/:body/:grade', rutasProtegidas, db.getddiscount)
+app.get('/campaignf/:modelgroup', rutasProtegidas, db.getfdiscount)
 
 
 app.listen(port, () => {

@@ -37,15 +37,23 @@ export class OffersService {
   }
 
   public getModelGroups():Observable<any[]>{
-    return this.httpClient.get<any[]>(this.REST_API_SERVER + "modelgroup")
+    return this.httpClient.get<any>(this.REST_API_SERVER + "modelgroup")
   }
 
   public getLvcByMG(modelgroup:string):Observable<any[]>{
-    return this.httpClient.get<any[]>(this.REST_API_SERVER + "localcode/" + modelgroup)
+    return this.httpClient.get<any>(this.REST_API_SERVER + "localcode/" + modelgroup)
   }
 
-  public getNrpByLvc(localcode:string):Observable<any[]>{
-    return this.httpClient.get<any[]>(this.REST_API_SERVER + "price/" + localcode)
+  public getByLvc(localcode:string):Observable<any[]>{
+    return this.httpClient.get<any>(this.REST_API_SERVER + "price/" + localcode)
+  }
+
+  public getddiscount(modelgroup:string, bodytype:string, grade: string):Observable<any[]>{
+    return this.httpClient.get<any>(this.REST_API_SERVER + "campaignd/" + modelgroup + "/" + bodytype + "/" + grade)
+  }
+
+  public getfdiscount(modelgroup:string):Observable<any[]>{
+    return this.httpClient.get<any>(this.REST_API_SERVER + "campaignf/" + modelgroup)
   }
 
 }
