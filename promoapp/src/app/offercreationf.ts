@@ -4,8 +4,9 @@ export class Offercreationf {
       public date: string,
       public model_group: string,
       public local_code: string,
-      public nrp: number,
-      public discount: number,
+      public type: string,
+      public channel: string,
+      public finance: string,
     ) {  }
   
 }

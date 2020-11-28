@@ -1,23 +1,9 @@
 <div *ngIf="display" class="container-xl p-3 my-3 border rounded shadow" id="offercontainer">
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="Header">Header</th>
-            <th scope="Price">Offer</th>
-            <th scope="Type1">Desde/Por</th>
-            <th scope="Date">Date</th>
-
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>{{offer.header}}</td>
-            <td>{{offer.price | currency: 'EUR'}}</td>
-            <td>{{offer.type1}}</td>
-            <td>{{offer.date | date: 'MMMM'}}</td>
-        </tr>
-        </tbody>
-    </table>
-    <button type="button" class="btn btn-outline-primary mr-1" (click)="edit()" [routerLink]="'/edit-offer'">Edit</button>
-    <button type="button" class="btn btn-outline-primary" (click)="delete()" >Delete</button>
+    <div class="card-body">
+        <h5 class="card-title">{{offer.header}}</h5>
+        <h6 class="card-subtitle mb-2 text-muted">{{offer.date | date: 'MMMM'}}</h6>
+        <p class="card-text">{{offer.type1}} : {{offer.price | currency: 'EUR'}}</p>
+        <button type="button" class="btn btn-outline-primary mr-1" (click)="edit()" [routerLink]="'/edit-offer'">Edit</button>
+        <button type="button" class="btn btn-outline-primary" (click)="delete()" >Delete</button>
+    </div>
 </div>

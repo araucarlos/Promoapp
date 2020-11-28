@@ -20,21 +20,36 @@
       <label for="local_code">Local Vehicle Code</label>
       <select type="text" name="local_code" class="form-control" #local_code
       required
-      [(ngModel)]="offercf.local_code" (ngModelChange)="onLvcSelect(local_code.value)">
+      [(ngModel)]="offercf.local_code">
         <option *ngFor="let localcode of (localcodes$ | async)" [value]="localcode.local_code">{{localcode.local_code}}</option>
       </select>
     </div>
     <div class="form-group">
-      <label for="nrp">Net Retail Price</label>
-      <input type="text" name="nrp" class="form-control" #nrp
-        required
-        [(ngModel)]="offercf.nrp">
+      <label for="type">Desde/Por</label>
+      <select type="text" name="type" class="form-control" #type
+      required
+      [(ngModel)]="offercf.type">
+        <option>Desde</option>
+        <option>Por</option>
+      </select>
     </div>
     <div class="form-group">
-      <label for="discount">Discount (%)</label>
-      <input type="text" class="form-control" #discount
-        required
-        [(ngModel)]="offercf.discount" name="discount">
+      <label for="channel">Channel</label>
+      <select type="text" name="channel" class="form-control" #channel
+      required
+      [(ngModel)]="offercf.channel">
+        <option>Private</option>
+        <option>Fleet</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="finance">Finance</label>
+      <select type="text" name="finance" class="form-control" #finance
+      required
+      [(ngModel)]="offercf.finance">
+        <option>Yes</option>
+        <option>No</option>
+      </select>
     </div>
     <button type="button" class="btn btn-outline-primary mr-1" (click)="newOffer()">Clear</button>
     <button type="button" class="btn btn-outline-primary mr-1" (click)="onSubmit()" [routerLink]="'/new-offer'">Submit</button>

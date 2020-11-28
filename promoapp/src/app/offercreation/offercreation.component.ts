@@ -4,7 +4,9 @@ import { Offer } from '../model/offer';
 import { Router} from '@angular/router';
 import {OffersService} from '../../app/services/offers.service';
 import { forkJoin, Observable, Subscription } from 'rxjs';
-import { map, tap } from "rxjs/operators";
+import { map, tap, concatMap, switchMap } from "rxjs/operators";
+import { CompileTemplateMetadata } from '@angular/compiler';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 
 @Component({
@@ -14,61 +16,68 @@ import { map, tap } from "rxjs/operators";
 })
 export class OffercreationComponent implements OnInit {
 
-  lvcsubscription$: Subscription
+  subscription1$: Subscription;
   modelgroups$:Observable<any[]>;
   localcodes$:Observable<any[]>;
 
   header:string = '';
-  modelgroup:string = '';
-  body:string = '';
-  grade:string = '';
-  ddiscount:number = 0;
-  fdiscount:number = 0;
-  oprice:number = 0;
+  price:number = 0;
+  type1:string = '';
+  type2:string = '';
+  datein: Date = new Date();
+  legal:string = '';
+  emissions:string = '';
 
   constructor(private offerservices : OffersService, private router: Router) { }
 
-  offercf = new Offercreationf('', '', '', 0, 0);
+  offercf = new Offercreationf('', '', '', '', '', '');
 
   monthNames : Array<string> = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
   newOffer() {
-    this.offercf = new Offercreationf('', '', '', 0, 0);
+    this.offercf = new Offercreationf('', '', '', '', '', '');
   }
 
   onSubmit() {
-    const header: string = this.header;
-    const type1: string = 'Desde';
-    const type2: string = 'PVP';
+    
+    this.type1 = this.offercf.type
 
-    //string to date
     const find: number = this.monthNames.findIndex(month => month === this.offercf.date);
-    const datein: Date = new Date();
-    datein.setMonth(find);
-    const date: Date = datein;
+    this.datein.setMonth(find);
 
-    if( this.modelgroup == 'D23B') {
 
-      let ddiscount$ = this.offerservices.getddiscount(this.modelgroup, this.body, this.grade);
-      let fdiscount$ = this.offerservices.getfdiscount(this.modelgroup);
-
-      forkJoin([ddiscount$, fdiscount$]).subscribe(results => {
-        this.ddiscount = parseFloat(results[0][0].discount);
-        this.fdiscount = parseInt(results[1][0].discount);
-        this.oprice = this.offercf.nrp * (1-this.ddiscount) - this.fdiscount;
-        console.log(this.oprice)
+    this.subscription1$  = this.offerservices.getByLvc(this.offercf.local_code)
+      .pipe(
+        map(data => data[0]),
+        concatMap( data => forkJoin([
+          this.offerservices.getddiscount(data.model_group, data.body, data.grade)
+            .pipe(map(response => response[0].discount)),
+          this.offerservices.getfdiscount(data.model_group)
+            .pipe(map(response => response[0].discount))
+        ])
+        .pipe(
+          switchMap(result => {
+            if( data.model_group == 'D23B') {
+              this.type2 = 'PFF';
+              this.header = data.description;
+              if( this.offercf.finance == 'Yes') {
+                this.price = data.pff*(1-result[0])-result[1];
+              }
+              else{
+                this.price = data.pff*(1-result[0]);
+              }
+              this.legal = 'Price from ' + this.price + ' península y baleares';
+              this.emissions = 'CO2';
+            }
+            const offer: Offer = { header: this.header, price: this.price, type1: this.type1, type2: this.type2, date: this.datein, legal: this.legal, emissions: this.emissions };
+            return this.offerservices.postOffer(offer)
+          })
+        )
+        )
+      )
+      .subscribe(result => {
+        this.router.navigate(['/offers'])  
       })
-
-    }
-
-
-    const price: number = this.offercf.nrp * (1-this.offercf.discount);
-    const legal: string = 'Price from ' + price + ' península y baleares';
-    const emissions: string = 'CO2';
-
-    const offer:Offer = {header, price, type1, type2, date, legal, emissions};
-
-    this.offerservices.postOffer(offer).subscribe(()=>{this.router.navigate(['/offers'])})
 
   }
 
@@ -77,26 +86,13 @@ export class OffercreationComponent implements OnInit {
   }
 
 
+
   onMgSelect(modelgroup:string){
     this.localcodes$=this.offerservices.getLvcByMG(modelgroup)
   }
 
-  onLvcSelect(localcode:string){
-    this.lvcsubscription$ = this.offerservices.getByLvc(localcode)
-      .pipe (
-        map(data => data[0]),
-      )
-      .subscribe(data => {
-        this.offercf.nrp = data.pff
-        this.header = data.description
-        this.modelgroup = data.model_group
-        this.body = data.body
-        this.grade = data.grade
-      })
-  }
-
   ngOnDestroy(): void {
-    this.lvcsubscription$.unsubscribe()
+    
   }
 
 
