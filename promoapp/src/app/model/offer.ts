@@ -1,5 +1,6 @@
 export interface Offer{
     id?: number,
+    model_group: string,
     header: string,
     price: number,
     type1: string,
@@ -7,4 +8,5 @@ export interface Offer{
     date: Date,
     legal: string,
     emissions: string,
+    finance: boolean,
 }

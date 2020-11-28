@@ -13,16 +13,25 @@ export class OfferdisplayComponent implements OnInit {
 
   display:Boolean = true;
 
+  model:string = '';
+
   @Input()
   offer:Offer
   
   constructor(private offerservices : OffersService, private router: Router) { }
 
   ngOnInit(): void {
+    if (this.offer.model_group == 'D23B'){
+      this.model = 'Navara'
+    }
+    else{
+      this.model = 'X-Trail'
+    }
   }
 
   edit(){
     this.offerservices.id.next(this.offer.id)
+    
   }
 
   delete(){

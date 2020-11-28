@@ -56,9 +56,9 @@ const getOfferById = (request, response) => {
 }
 
 const createOffer = (request, response) => {
-  const { header, price, type1, type2, date, legal, emissions } = request.body
+  const { model_group, header, price, type1, type2, date, legal, emissions, finance } = request.body
 
-  pool.query('INSERT INTO ccreativo2 (header, price, type1, type2, date, legal, emissions) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id', [header, price, type1, type2, date, legal, emissions], (error, result) => {
+  pool.query('INSERT INTO ccreativo2 (model_group, header, price, type1, type2, date, legal, emissions, finance) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id', [model_group, header, price, type1, type2, date, legal, emissions, finance], (error, result) => {
     if (error) {
       throw error
     }
@@ -68,11 +68,11 @@ const createOffer = (request, response) => {
 
 const updateOffer = (request, response) => {
   const id = parseInt(request.params.id)
-  const { header, price, type1, type2, date, legal, emissions } = request.body
+  const { model_group, header, price, type1, type2, date, legal, emissions, finance } = request.body
 
   pool.query(
-    'UPDATE ccreativo2 SET header = $1, price = $2, type1 = $3, type2 = $4, date = $5, legal = $6, emissions = $7 WHERE id = $8',
-    [ header, price, type1, type2, date, legal, emissions, id ],
+    'UPDATE ccreativo2 SET model_group = $1, header = $2, price = $3, type1 = $4, type2 = $5, date = $6, legal = $7, emissions = $8, finance = $9 WHERE id = $10',
+    [ model_group, header, price, type1, type2, date, legal, emissions, finance, id ],
     (error, results) => {
       if (error) {
         throw error

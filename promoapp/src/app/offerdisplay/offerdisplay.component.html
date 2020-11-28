@@ -1,6 +1,8 @@
-<div *ngIf="display" class="container-xl p-3 my-3 border rounded shadow" id="offercontainer">
+<div *ngIf="display" class="container-xl p-2 my-2 border rounded shadow" id="offercontainer">
     <div class="card-body">
-        <h5 class="card-title">{{offer.header}}</h5>
+        <span *ngIf="offer.finance" class="badge badge-warning float-right m-2">Finance</span>
+        <h3 class="card-title">{{model}}</h3>
+        <h6 class="card-subtitle mb-2 text-muted">{{offer.header}}</h6>
         <h6 class="card-subtitle mb-2 text-muted">{{offer.date | date: 'MMMM'}}</h6>
         <p class="card-text">{{offer.type1}} : {{offer.price | currency: 'EUR'}}</p>
         <button type="button" class="btn btn-outline-primary mr-1" (click)="edit()" [routerLink]="'/edit-offer'">Edit</button>

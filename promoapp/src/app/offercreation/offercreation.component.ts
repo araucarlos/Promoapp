@@ -27,6 +27,7 @@ export class OffercreationComponent implements OnInit {
   datein: Date = new Date();
   legal:string = '';
   emissions:string = '';
+  finance:boolean = false;
 
   constructor(private offerservices : OffersService, private router: Router) { }
 
@@ -61,6 +62,7 @@ export class OffercreationComponent implements OnInit {
               this.type2 = 'PFF';
               this.header = data.description;
               if( this.offercf.finance == 'Yes') {
+                this.finance = true;
                 this.price = data.pff*(1-result[0])-result[1];
               }
               else{
@@ -69,7 +71,7 @@ export class OffercreationComponent implements OnInit {
               this.legal = 'Price from ' + this.price + ' península y baleares';
               this.emissions = 'CO2';
             }
-            const offer: Offer = { header: this.header, price: this.price, type1: this.type1, type2: this.type2, date: this.datein, legal: this.legal, emissions: this.emissions };
+            const offer: Offer = { model_group: data.model_group, header: this.header, price: this.price, type1: this.type1, type2: this.type2, date: this.datein, legal: this.legal, emissions: this.emissions, finance: this.finance  };
             return this.offerservices.postOffer(offer)
           })
         )

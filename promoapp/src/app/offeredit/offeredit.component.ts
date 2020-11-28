@@ -12,7 +12,7 @@ import { Router} from '@angular/router';
 })
 export class OffereditComponent implements OnInit {
 
-  idsubscription:any;
+  idsubscription$: Subscription
   offer:Offer
   monthNames : Array<string> = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
@@ -20,10 +20,11 @@ export class OffereditComponent implements OnInit {
 
   }
 
-  offeref = new Offereditf(0,'', 0, '', '', '','','');
+  offeref = new Offereditf(0,'','', 0, '', '', '','','', false);
 
   onSubmit() {
     const id:number = this.offeref.id;
+    const model_group: string = this.offeref.model_group;
     const header: string = this.offeref.header;
     const price: number = this.offeref.price;
     const type1: string = this.offeref.type1;
@@ -38,16 +39,19 @@ export class OffereditComponent implements OnInit {
     const legal: string = this.offeref.legal;
     const emissions: string = this.offeref.emissions;
 
-    const offer:Offer = {id, header, price, type1, type2, date, legal, emissions};
+    const finance:boolean = this.offeref.finance;
+
+    const offer:Offer = {id, model_group, header, price, type1, type2, date, legal, emissions, finance};
 
     this.offerservices.updateOffer(offer).subscribe(()=>{this.router.navigate(['/offers'])})
 
   }
 
   ngOnInit(): void {
-    this.idsubscription = this.offerservices.id.subscribe(id => {
+    this.idsubscription$ = this.offerservices.id.subscribe(id => {
       this.offerservices.loadOfferId(id).subscribe(offer => {
         this.offeref.id = offer[0].id;
+        this.offeref.model_group = offer[0].model_group;
         this.offeref.header = offer[0].header;
         this.offeref.price = offer[0].price;
         this.offeref.type1 = offer[0].type1;
@@ -55,13 +59,14 @@ export class OffereditComponent implements OnInit {
         this.offeref.date = this.monthNames[parseInt(offer[0].date.substring(5,7))-1];
         this.offeref.legal = offer[0].legal;
         this.offeref.emissions = offer[0].emissions;
+        this.offeref.finance = offer[0].finance;
       });
     });
   }
   
 
   ngOnDestroy(): void {
-    this.idsubscription.unsubscribe()
+    this.idsubscription$.unsubscribe()
   }
 
 }
