@@ -26,23 +26,23 @@
             [(ngModel)]="offeref.type2" readonly>
         </div> 
         <div class="form-group">
-            <label for="date">Date</label>
-            <input type="text" name="date" class="form-control" #date
-              required
-              [(ngModel)]="offeref.date" readonly>
+          <label for="date">Date</label>
+          <input type="text" name="date" class="form-control" #date
+            required
+            [(ngModel)]="offeref.date" readonly>
         </div>
         <div class="form-group">
-            <label for="legal">Legal</label>
-            <input type="text" name="legal" class="form-control" #legal
-              required
-              [(ngModel)]="offeref.legal">
+          <label for="legal">Legal</label>
+          <textarea name="legal" class="form-control" rows="6" #legal
+            required
+            [(ngModel)]="offeref.legal"></textarea>
         </div>
         <div class="form-group">
           <label for="emissions">Emissions</label>
-          <input type="text" name="emissions" class="form-control" #emissions
+          <textarea name="emissions" class="form-control" rows="6" #emissions
             required
-            [(ngModel)]="offeref.emissions">
-      </div>
+            [(ngModel)]="offeref.emissions"></textarea>
+        </div>
         <button type="button" class="btn btn-outline-primary mr-1" (click)="onSubmit()">Save Changes</button>
         <button type="button" class="btn btn-outline-primary mr-1" [routerLink]="'/offers'">Cancel</button>
     </form>

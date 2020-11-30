@@ -63,13 +63,15 @@ export class OffercreationComponent implements OnInit {
               this.header = data.description;
               if( this.offercf.finance == 'Yes') {
                 this.finance = true;
-                this.price = data.pff*(1-result[0])-result[1];
+                this.price = Number((data.pff*(1-result[0])-result[1]).toFixed(2));
               }
               else{
-                this.price = data.pff*(1-result[0]);
+                this.price = Number((data.pff*(1-result[0])).toFixed(2));
               }
-              this.legal = 'Price from ' + this.price + ' península y baleares';
-              this.emissions = 'CO2';
+
+              this.legal = '*Precio Franco Fábrica para Nissan NAVARA ' + this.header + ' para Península y Baleares ' + this.price + '€ 5 años de garantía o 160.000 km (IVA, transporte y Nissan assistance no incluidos. Campaña promocional incluida) Oferta válida para ventas a autónomos y empresas que financien con  RCI Banque SA, Sucursal en España. Importe mínimo a financiar 7.000€. Permanencia mínima 36 meses. Oferta no compatible con otras campañas y válida hasta el 31/' + this.numbermonth(this.datein.getMonth()+1) + '/2020. Para más información acude a tu concesionario Nissan más cercano. La imagen visualizada puede no coincidir con el vehículo ofertado. Para más información acude a tu concesionario Nissan más cercano. 5 años de garantía o 160.000 km, lo que antes suceda. Consumo homologado de acuerdo con la normativa europea.  El consumo de combustible y las emisiones de CO2 no sólo dependen del rendimiento del vehículo; influyen también el comportamiento al volante y otros factores no técnicos'
+
+              this.emissions = 'Consumo mixto WLTP: 8,9 l/100 km. Emisiones de CO2 WLTP: 234 g/km. Consumo y emisiones homologados de conformidad con la normativa europea aplicable. Como consecuencia de la introducción del nuevo procedimiento de prueba armonizado a nivel mundial para vehículos ligeros (WLTP)  los datos técnicos mostrados podrían ser actualizados antes de la matriculación del vehículo e influir en los tipos impositivos que resulten de aplicación. El equipamiento opcional y accesorios junto con otros factores no técnicos pueden afectar el consumo y las emisiones. Las motorizaciones mostradas pueden estar sujetas a restricciones de disponibilidad debido a cambios en la gama de motorizaciones Nissan. Consulta disponibilidad y fecha de entrega con tu Concesionario Nissan. Para más información sobre los valores oficiales de consumo y autonomía consulta https://www.nissan.es/wltp.html.';
             }
             const offer: Offer = { model_group: data.model_group, header: this.header, price: this.price, type1: this.type1, type2: this.type2, date: this.datein, legal: this.legal, emissions: this.emissions, finance: this.finance  };
             return this.offerservices.postOffer(offer)
@@ -81,6 +83,14 @@ export class OffercreationComponent implements OnInit {
         this.router.navigate(['/offers'])  
       })
 
+  }
+
+  numbermonth(number): void {
+    const numberStr = number.toString();
+    if(numberStr.length < 2){
+      number = '0' + number;
+    }   
+    return number
   }
 
   ngOnInit(): void {
