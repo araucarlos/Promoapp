@@ -17,8 +17,9 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 export class OffercreationComponent implements OnInit {
 
   subscription1$: Subscription;
-  modelgroups$:Observable<any[]>;
-  localcodes$:Observable<any[]>;
+  modelgroups$: Observable<any[]>;
+  localcodes$: Observable<any[]>;
+  unsubscribe: boolean = false;
 
   header:string = '';
   price:number = 0;
@@ -28,6 +29,7 @@ export class OffercreationComponent implements OnInit {
   legal:string = '';
   emissions:string = '';
   finance:boolean = false;
+  
 
   constructor(private offerservices : OffersService, private router: Router) { }
 
@@ -57,7 +59,7 @@ export class OffercreationComponent implements OnInit {
             .pipe(map(response => response[0].discount))
         ])
         .pipe(
-          switchMap(result => {
+          concatMap(result => {
             if( data.model_group == 'D23B') {
               this.type2 = 'PFF';
               this.header = data.description;
@@ -80,6 +82,7 @@ export class OffercreationComponent implements OnInit {
         )
       )
       .subscribe(result => {
+        this.unsubscribe = !this.unsubscribe;
         this.router.navigate(['/offers'])  
       })
 
@@ -104,7 +107,9 @@ export class OffercreationComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
-    
+    if(this.unsubscribe){
+      this.subscription1$.unsubscribe()
+    }
   }
 
 
